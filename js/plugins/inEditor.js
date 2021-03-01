@@ -247,7 +247,7 @@ function Editor(e) {
         }, s.onkeyup = function () {
             var e = getSelection();
             lastEditRange = e.getRangeAt(0), console.log(lastEditRange)
-        }, L.innerHTML = "在此编辑文章内容";
+        }, L.innerHTML = "";
         var M = t.$.createElement("div"), F = t.$.createElement("p"), R = t.$.createElement("br");
         M.setAttribute("contenteditable", "true"), M.setAttribute("id", "writeB"), M.style.cssText = "width:100%;height:97%;outline:none;font-size:13px;padding:0px 10px;box-sizing:border-box", M.appendChild(L), F.appendChild(R), M.appendChild(F), s.appendChild(M), t.$.getElementById(t.ElemId).appendChild(i), t.$.getElementById(t.ElemId).appendChild(s), t.$.getElementById("WirteBox").style.height = t.$.getElementById(t.ElemId).offsetHeight - t.$.getElementById("TabNav").offsetHeight - 13 + "px", t.$.getElementById("writeB").addEventListener("DOMSubtreeModified", function () {
             if (t.$.getElementById("writeB").children.length < 2) {

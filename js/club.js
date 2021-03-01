@@ -14,7 +14,9 @@ new Vue({
         clubUuid: null,
         thisClub: {},
         isFatie: false,
-        lEditor: {} // 富文本编辑器
+        lEditor: {}, // 富文本编辑器
+        reportUuid:"",
+        isGuanzhu:"关注",
     },
     mounted: function () {
         this.init();
@@ -27,6 +29,10 @@ new Vue({
         // 查询用户信息
         init: function () {
             let self = this;
+            self.clubUuid = getUrlParam("uuid");
+            if (self.clubUuid == null) {
+                location.href = "index.html";
+            }
             $.ajax({
                 headers: {
                     Authorization: localStorage.getItem(token)
@@ -53,6 +59,20 @@ new Vue({
                     if (data.code === 200) {
                         self.user = data.data;
                         self.user.headImg = imagePrefix + self.user.headImg;
+                    }
+                }
+            });
+            $.ajax({
+                headers: {
+                    Authorization: localStorage.getItem(token)
+                },
+                url: prefix + 'user/join/' + self.clubUuid,
+                type: "post",
+                success: function (data) {
+                    if (data.code === 200) {
+                        if (data.data === true) {
+                            self.isGuanzhu = "取消关注";
+                        }
                     }
                 }
             });
@@ -86,10 +106,6 @@ new Vue({
                     }
                 }
             });
-            self.clubUuid = getUrlParam("uuid");
-            if (self.clubUuid == null) {
-                location.href = "index.html";
-            }
             // 当前论坛详情
             $.ajax({
                 headers: {
@@ -214,6 +230,72 @@ new Vue({
                     location.href = "login.html";
                 }
             });
+
+        },
+        _reportShow: function (uuid) {
+            this.reportUuid = uuid;
+            syalert.syopen('reportArticle');
+        },
+        // 举报
+        _report: function () {
+            $.ajax({
+                headers: {
+                    Authorization: localStorage.getItem(token)
+                },
+                url: prefix + 'article/report',
+                type: "post",
+                data: {
+                    uuid: this.reportUuid,
+                    reportMsg: $("#reportMsg").val()
+                },
+                success: function (data) {
+                    if (data.code === 200) {
+                        alert("举报成功！")
+                    } else {
+                        alert("举报失败");
+                    }
+                    $("#reportMsg").val("");
+                    syalert.syhide('reportArticle');
+                }
+            });
+        },
+        _guanzhu:function () {
+            let self = this;
+            if (self.isGuanzhu === "关注") {
+                $.ajax({
+                    headers: {
+                        Authorization: localStorage.getItem(token)
+                    },
+                    url: prefix + 'club/add/' + self.clubUuid,
+                    type: "post",
+                    success: function (data) {
+                        if (data.code === 200) {
+                            alert("关注成功！");
+                            self.isGuanzhu = "取消关注";
+                        } else {
+                            alert("关注失败");
+                            self.isGuanzhu = "关注";
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    headers: {
+                        Authorization: localStorage.getItem(token)
+                    },
+                    url: prefix + 'club/exit/' + self.clubUuid,
+                    type: "post",
+                    success: function (data) {
+                        if (data.code === 200) {
+                            alert("取消关注成功！");
+                            self.isGuanzhu = "关注";
+                        } else {
+                            alert("取消关注失败");
+                            self.isGuanzhu = "取消关注";
+                        }
+                    }
+                });
+            }
 
         }
     }

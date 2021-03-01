@@ -1601,6 +1601,7 @@ body, input, button, textarea, select {
 }
 
 .footer {
+    bottom:10px;
     clear: both;
     padding: 24px 15px;
     font-size: 12px;

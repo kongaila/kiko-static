@@ -18,6 +18,7 @@ new Vue({
         tiezi2: "→查看论坛列表",
         luntan2: "→查看推荐主题帖",
         clubHeadImg: "",
+        reportUuid: ""
     },
     mounted: function () {
         this.init();
@@ -266,23 +267,29 @@ new Vue({
             });
 
         },
-        _repostShow:function () {
+        _repostShow: function (uuid) {
+            this.reportUuid = uuid;
             syalert.syopen('reportArticle');
         },
         // 举报
-        _report:function () {
+        _report: function () {
             $.ajax({
                 headers: {
                     Authorization: localStorage.getItem(token)
                 },
                 url: prefix + 'article/report',
                 type: "post",
+                data: {
+                    uuid: this.reportUuid,
+                    reportMsg: $("#reportMsg").val()
+                },
                 success: function (data) {
                     if (data.code === 200) {
                         alert("举报成功！")
                     } else {
                         alert("举报失败");
                     }
+                    $("#reportMsg").val("");
                     syalert.syhide('reportArticle');
                 }
             });

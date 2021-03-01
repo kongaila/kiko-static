@@ -513,7 +513,7 @@ function Editor(obj) {
                 lastEditRange = selection.getRangeAt(0)
                 console.log(lastEditRange)
             }
-            d.innerHTML = '在此编辑文章内容'
+            // d.innerHTML = '在此编辑文章内容'
             var e = _this.$.createElement('div')
             var f = _this.$.createElement('p')
             var g = _this.$.createElement('br')
