@@ -43,7 +43,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="header-navbar">
                     <div style="float: left">
-                        <img style="width: 50px;height: 50px;margin-left: 20px" src="images/frame/laba.png">
+                        <img style="width: 50px;height: 50px;margin-left: 20px" src="images/frame/gonggao.png">
                     </div>
                     <div style="">
                         <marquee scrollamount=5>Tips:&nbsp;{{declare}}</marquee>
@@ -52,6 +52,7 @@
             </div>
         </nav>
     </header>
+
     <section class="container">
         <aside class="sidebar">
             <div class="fixed">
@@ -86,19 +87,17 @@
                 </div>
                 <div class="widget widget_search">
                     <div class="input-group">
-                        <input type="text" id="query" name="keyword" class="form-control" size="35" placeholder="请输入关键字"
-                               maxlength="15" autocomplete="off">
-                        <span class="input-group-btn">
-		<button class="btn btn-default btn-search" name="search" type="submit" @click="_recommend('search')">搜索</button>
-		</span></div>
+                    </div>
                 </div>
             </div>
             <div class="widget widget_hot">
-                <h3>论坛类型</h3>
+                <h3>菜单</h3>
                 <ul>
-                    <li><a class="likeType" title="全部" name="null" @click="_recommend(null)">全部</a></li>
-                    <li v-for="(d,i) in dicts"><a class="likeType" :name="d.name" :title="d.name"
-                                                  @click="_recommend(d.name)">{{d.name}}</a></li>
+                    <li><a class="selfMenu" name="selfInfo" @click="_menu(1)" title="个人信息">个&nbsp;&nbsp;人&nbsp;&nbsp;信&nbsp;&nbsp;息</a>
+                    </li>
+                    <li><a class="selfMenu" name="selfClub" @click="_menu(2)" title="我加入的论坛">我加入的论坛</a></li>
+                    <li><a class="selfMenu" name="selfArticle" @click="_menu(3)" title="我发表的文章">我发表的文章</a></li>
+                    <li><a class="selfMenu" name="selfComment" @click="_menu(4)" title="我发布的评论">我发布的评论</a></li>
                 </ul>
             </div>
             <div class="widget">
@@ -111,8 +110,8 @@
 
             <div class="widget widget_sentence">
                 <h3>广告位招租</h3>
-                <a href="#" target="_blank" rel="nofollow" title="广告位">
-                    <img style="width: 100%" src="images/frame/270200.jpg" alt="广告位"></a>
+                <a  target="_blank" rel="nofollow" title="广告位">
+                    <img style="width: 100%" src="images/frame/guanggaowei.jpg" alt="广告位"></a>
             </div>
             <div class="widget widget_sentence">
                 <h3>友情链接</h3>
@@ -194,6 +193,6 @@
 <script src="js/plugins/scripts.js"></script>
 <script src="js/public.js"></script>
 <!--script src="js/plugins/pager.js"></script-->
-<script src="js/index.js"></script>
+<script src="js/self.js"></script>
 </body>
 </html>

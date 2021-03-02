@@ -60,12 +60,12 @@ function setScro(obj, text) {
         // 文本节点在光标位置处插入新的表情内容
         // textNode.insertData(rangeStartOffset, '')
         document.execCommand('insertHTML', 'false', '<code>' + text + '</code>')
-        // console.log(document.execCommand('insertHTML', 'false', '<code>'))
+        // // console.log(document.execCommand('insertHTML', 'false', '<code>'))
         // var codes = document.createElement('code')
         // codes.innerHTML=text
-        // console.log(edit)
+        // // console.log(edit)
         // edit.appendChild(codes)
-        // console.log(textNode.insertData())
+        // // console.log(textNode.insertData())
         // 光标移动到到原来的位置加上新内容的长度
         // range.setStart(textNode, rangeStartOffset + text.length)
         // 光标开始和光标结束重叠
@@ -259,7 +259,7 @@ function Editor(obj) {
                             }
                         }
                     } else if (document.selection) {
-                        console.log(document.selection.createRange())
+                        // console.log(document.selection.createRange())
                         return document.selection.createRange();
                     }
                     q6.style.display = 'none'
@@ -330,8 +330,8 @@ function Editor(obj) {
                     inputObj.setAttribute("style", 'opacity:0;width:20.5px;height:18px;margin:0px 0 0 -17px');
                     b.appendChild(inputObj);
                     inputObj.onchange = function () {
-                        console.log(this.files[0]);
-                        console.log(_this.FileConfig.FileImgUrl);
+                        // console.log(this.files[0]);
+                        // console.log(_this.FileConfig.FileImgUrl);
                         var form = new FormData();
                         form.append("uploadFile", this.files[0]);
                         var xhr = new XMLHttpRequest();
@@ -339,11 +339,11 @@ function Editor(obj) {
                         xhr.setRequestHeader("Authorization", localStorage.getItem(token));
                         xhr.responseType = "text";
                         xhr.send(form);
-                        console.log("444" + xhr.responseText);
+                        // console.log("444" + xhr.responseText);
                         // xhr.onload = function(e){
-                        // 	console.log("444" + e.data)
-                        // 	console.log("444" + e)
-                        // 	console.log("444" + e.target.response)
+                        // 	// console.log("444" + e.data)
+                        // 	// console.log("444" + e)
+                        // 	// console.log("444" + e.target.response)
                         // 	// var data = JSON.parse(e.target.responseText);
                         // 	// if(data.statuCode==200){
                         // 	// 	var ImgFileUrl = data.imgurl
@@ -355,7 +355,7 @@ function Editor(obj) {
                             let responseText = e.target.responseText;
                             if (responseText !== "") {
                                 let data = JSON.parse(responseText);
-                                console.log(data);
+                                // console.log(data);
                                 if (data.code === 200) {
                                     let ImgFileUrl = data.data;
                                     _this.$.getElementById('writeB').focus();
@@ -427,7 +427,7 @@ function Editor(obj) {
                         document.execCommand("insertOrderedList")
                     } else if (i == 17) {
                         q8.style.display = 'block'
-                        // console.log(getSelection().focusOffset)
+                        // // console.log(getSelection().focusOffset)
                     } else if (i == 20) {
                         var r1 = _this.$.createElement('div')
                         r1.style.cssText = 'width:100%;height:100%;background:rgba(0,0,0,.5);position:fixed;top:0;left:0;z-index:99999999999999999'
@@ -511,7 +511,7 @@ function Editor(obj) {
                 var selection = getSelection()
                 // 设置最后光标对象
                 lastEditRange = selection.getRangeAt(0)
-                console.log(lastEditRange)
+                // console.log(lastEditRange)
             }
             // d.innerHTML = '在此编辑文章内容'
             var e = _this.$.createElement('div')

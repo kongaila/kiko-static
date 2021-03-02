@@ -14,7 +14,6 @@
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/public.css">
     <link rel="stylesheet" href="css/syalert.min.css"/>
-    <link rel="apple-touch-icon-precomposed" href="images/frame/icon.png">
     <link rel="shortcut icon" href="images/frame/favicon.ico">
     <script src="js/plugins/nprogress.js"></script>
     <script src="js/plugins/syalert/syalert.min.js"></script>
@@ -32,8 +31,8 @@
                 <div class="header-topbar hidden-xs link-border">
                     <ul class="site-nav topmenu">
                         <li><a href="index.html" rel="nofollow">回到主页</a></li>
-                        <li><a href="#" rel="nofollow">欢迎 {{user.userName}}</a></li>
-                        <li><a href="#" title="个人中心"><i class="fa fa-rss"></i> 个人中心</a></li>
+                        <li><a rel="nofollow">欢迎 {{user.userName}}</a></li>
+                        <li><a href="self.html" title="个人中心"><i class="fa fa-rss"></i> 个人中心</a></li>
                         <li><a @click="_logout()" rel="nofollow">退出</a></li>
                     </ul>
                     不靠谱青年男女聚集地
@@ -49,7 +48,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="header-navbar">
                     <div style="float: left">
-                        <img style="width: 50px;height: 50px;margin-left: 20px" src="images/frame/laba.png">
+                        <img style="width: 50px;height: 50px;margin-left: 20px" src="images/frame/gonggao.png">
                     </div>
                     <div style="">
                         <marquee scrollamount=5>Tips:&nbsp;{{declare}}</marquee>
@@ -115,8 +114,8 @@
             </div>
             <div class="widget widget_sentence">
                 <h3>广告位招租</h3>
-                <a href="#" target="_blank" rel="nofollow" title="广告位">
-                    <img style="width: 100%" src="images/frame/270200.jpg" alt="广告位"></a>
+                <a  target="_blank" rel="nofollow" title="广告位">
+                    <img style="width: 100%" src="images/frame/guanggaowei.jpg" alt="广告位"></a>
             </div>
             <div class="widget widget_sentence">
                 <h3>友情链接</h3>
@@ -140,17 +139,17 @@
                     </ol>
                     <div class="carousel-inner" role="listbox">
                         <div class="item active">
-                            <a href="#" target="_blank" title="推荐">
-                                <img src="images/frame/IMG_004%20(3).jpg" alt="图p不见了"
+                            <a  target="_blank" title="推荐">
+                                <img src="images/frame/tuijian1.jpg" alt="图p不见了"
                                      class="img-responsive"></a>
                         </div>
                         <div class="item">
-                            <a href="#" target="_blank" title="推荐">
-                                <img src="images/frame/nvhai.jpg" alt="图p不见了" class="img-responsive"></a>
+                            <a  target="_blank" title="推荐">
+                                <img src="images/frame/tuijian2.jpg" alt="图p不见了" class="img-responsive"></a>
                         </div>
                         <div class="item">
-                            <a href="#" target="_blank" title="推荐">
-                                <img src="images/frame/lantingxu.jpg" alt="图p不见了" class="img-responsive"></a>
+                            <a  target="_blank" title="推荐">
+                                <img src="images/frame/tuijian3.jpg" alt="图p不见了" class="img-responsive"></a>
                         </div>
                     </div>
                     <a class="left carousel-control" href="#focusslide" role="button" data-slide="prev" rel="nofollow">
@@ -166,13 +165,14 @@
                     </div>
                     <div style="width: 80%;height: 80%;float: right">
                         <br>
-                        <h2><span class="red">【论坛概况】</span><a target="_blank" href="#"
+                        <h2><span class="red">【论坛概况】</span><a target="_blank"
                                                               :title="thisClub.name">{{thisClub.name}}</a>
                         </h2>
                         <span class="xiaozihuise">论坛主：<span class="xiaozichengse">{{thisClub.masterName}}</span></span>&nbsp;&nbsp;
                         <span class="xiaozihuise">成员：<span class="xiaozichengse">{{thisClub.memberNum}}</span></span>&nbsp;&nbsp;
                         <span class="xiaozihuise">文章：<span class="xiaozichengse">{{thisClub.articleNum}}</span></span>&nbsp;&nbsp;
                         <span class="xiaozihuise">类型：<span class="xiaozichengse">{{thisClub.typeName}}</span></span>&nbsp;&nbsp;
+                        <button @click="_guanzhu()" class="button-guanzhu">{{isGuanzhu}}</button>
                         <br>
                         <span style="font-size: 18px" class="note">{{thisClub.description}}</span>
 
@@ -192,8 +192,8 @@
                          :title="a.title"
                          style="padding: 0 20px 20px 50px;">
                     <header>
-                        <a class="cat" href="#" :title="a.typeName">{{a.typeName}}<i></i></a>
-                        <h2><a href="#" title="a.title" target="_blank" @click="goshow(a.uuid)">{{a.title}}</a></h2>
+                        <a class="cat"  :title="a.typeName">{{a.typeName}}<i></i></a>
+                        <h2><a  title="a.title" target="_blank" @click="goshow(a.uuid)">{{a.title}}</a></h2>
                     </header>
                     <p class="meta">
                         <time title="发布时间" class="time"><i class="glyphicon glyphicon-time"></i>{{a.createdAt}}</time>

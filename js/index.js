@@ -146,7 +146,6 @@ new Vue({
                         }
                         if (self.isClub) {
                             self.clubs = data.data;
-                            console.log(self.clubs)
                         } else {
                             self.articles = data.data;
                         }
@@ -206,6 +205,9 @@ new Vue({
                     syalert.syhide('createClub')
                 }
             });
+            // 清空form表单
+            $('#createClubForm')[0].reset();
+            $("#headImgShow").remove();
         },
         _changeType: function () {
             this.isClub = !this.isClub;
@@ -215,7 +217,7 @@ new Vue({
             let self = this;
             $("#clubHeadImg").change(function () {
                 let file = $("#clubHeadImg")[0].files[0];
-                if (!self.checkFile("clubHeadImg", 3)) {
+                if (!self.checkFile("clubHeadImg", 10)) {
                     return;
                 }
                 let formData = new FormData();
@@ -231,6 +233,10 @@ new Vue({
                     processData: false,
                     success: function (data) {
                         self.clubHeadImg = data.data;
+                        // 图片回显
+                        let imgAddr = imagePrefix + self.clubHeadImg;
+                        $("#headImgShow").remove();
+                        $("#clubHeadImgShow").append("<img id='headImgShow' style='width: 85px;height: 85px' src='" + imgAddr + "' alt=''>");
                     }
                 })
             });

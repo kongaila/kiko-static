@@ -14,7 +14,6 @@
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/public.css">
     <link rel="stylesheet" href="css/syalert.min.css"/>
-    <link rel="apple-touch-icon-precomposed" href="images/frame/icon.png">
     <link rel="shortcut icon" href="images/frame/favicon.ico">
     <script src="js/plugins/nprogress.js"></script>
     <script src="js/plugins/syalert/syalert.min.js"></script>
@@ -35,8 +34,8 @@
                 <div class="header-topbar hidden-xs link-border">
                     <ul class="site-nav topmenu">
                         <li><a href="index.html" rel="nofollow">回到主页</a></li>
-                        <li><a href="#" rel="nofollow">欢迎 {{user.userName}}</a></li>
-                        <li><a href="#" title="个人中心"><i class="fa fa-rss"></i> 个人中心</a></li>
+                        <li><a rel="nofollow">欢迎 {{user.userName}}</a></li>
+                        <li><a href="self.html" title="个人中心"><i class="fa fa-rss"></i> 个人中心</a></li>
                         <li><a @click="_logout()" rel="nofollow">退出</a></li>
                     </ul>
                     不靠谱青年男女聚集地
@@ -53,7 +52,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="header-navbar">
                     <div style="float: left">
-                        <img style="width: 50px;height: 50px;margin-left: 20px" src="images/frame/laba.png">
+                        <img style="width: 50px;height: 50px;margin-left: 20px" src="images/frame/gonggao.png">
                     </div>
                     <div style="">
                         <marquee scrollamount=5>Tips:&nbsp;{{declare}}</marquee>
@@ -135,14 +134,16 @@
             <div class="show-comment-right">
                 &nbsp;&nbsp;<p style="font-size: 20px">{{c.content}} &nbsp;&nbsp;&nbsp;&nbsp;
                     <a @click="_like(c.uuid)" style="font-size: 15px">点赞</a>:&nbsp;<span :id="c.uuid" class="xiaozichengse">{{c.like}}</span>
-                    <a @click="_commentShow(c.uuid)" style="font-size:10px;float: right;position: relative;top: 5px;">点击回复</a></p>
+                    &nbsp;&nbsp;&nbsp;<span class="xiaozihuise" style="font-size:10px;position: relative;">回复于：&nbsp;{{c.createdAt}}</span>
+                    <a @click="_commentShow(c.uuid)" style="font-size:10px;float: right;position: relative;top: 5px;">点击回复</a>
+                </p>
                 <div v-for="(sm, i) in c.sonComment" class="comment-two" style="margin-left:30px;width: auto;height: 50px;margin-top: 5px">
                     <div style="position:relative;height: 50px">
                         <img style="width: 50px;height: 50px;" :title="sm.user.nick" :src="sm.user.headImg">：&nbsp;{{sm.content}}
                         <span class="xiaozihuise" style="font-size:10px;float: right;position: relative;bottom: -20px;">回复于：&nbsp;{{sm.createdAt}}</span>
                     </div>
                 </div>
-            </div>
+                </div>
         </div>
 
     </section>

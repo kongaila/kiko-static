@@ -1,11 +1,9 @@
 new Vue({
     el: '#main',
     data: {
-        headImg:"",
     },
     mounted: function () {
         this._check();
-        this.uploadClubHeadImg();
     },
     methods: {
         // 选择登录或者注册按钮
@@ -36,10 +34,9 @@ new Vue({
         },
         _register: function () {
             let user = {
-                userName:$("#userName").val(),
-                pass:$("#pass").val(),
-                nick:$("#nick").val(),
-                headImg:this.headImg
+                userName:$("#regUserName").val(),
+                pass:$("#regPass").val(),
+                nick:$("#regNick").val(),
             };
             $.ajax({
                 headers: {
@@ -58,48 +55,6 @@ new Vue({
                 }
             })
         },
-        uploadClubHeadImg: function () {
-            let self = this;
-            $("#headImg").change(function () {
-                let file = $("#headImg")[0].files[0];
-                if (!self.checkFile("headImg", 3)) {
-                    return;
-                }
-                let formData = new FormData();
-                formData.append("uploadFile", file);
-                $.ajax({
-                    headers: {
-                        Authorization: localStorage.getItem(token)
-                    },
-                    contentType: false,//使用form的enctype
-                    url: prefix + "upload", /*接口域名地址*/
-                    type: 'post',
-                    data: formData,
-                    processData: false,
-                    success: function (data) {
-                        self.headImg = data.data;
-                    }
-                })
-            });
-        },
-        checkFile: function (uploadFileId, maxSize) {
-            let file = $("#" + uploadFileId);
-            let suffix = ".jpg,.png,.gif,.jpeg";
-            if (suffix) {
-                let arr = suffix.split(',');
-                let fileName = file.val();
-                let fileSuffix = fileName.substr(fileName.lastIndexOf('.'));
-                if ($.inArray(fileSuffix.toLowerCase(), arr) < 0) {
-                    alert('文件格式不正确');
-                    return false;
-                }
-            }
-            if (file.get(0).files[0].size > 1024 * 1024 * maxSize) {
-                alert('文件不能大于' + maxSize + 'M');
-                return false;
-            }
-            return true;
-        }
     }
 
 });

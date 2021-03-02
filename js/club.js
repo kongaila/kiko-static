@@ -15,13 +15,14 @@ new Vue({
         thisClub: {},
         isFatie: false,
         lEditor: {}, // 富文本编辑器
-        reportUuid:"",
-        isGuanzhu:"关注",
+        reportUuid: "",
+        isGuanzhu: "关注",
     },
     mounted: function () {
         this.init();
         this._recommend();
         this.initFuwenben();
+        this.initSelfClub();
     },
     methods: {
         // 查询帖子
@@ -48,20 +49,6 @@ new Vue({
                     }
                 }
             });
-            // 个人信息
-            $.ajax({
-                headers: {
-                    Authorization: localStorage.getItem(token)
-                },
-                url: prefix + 'user/detail',
-                type: "post",
-                success: function (data) {
-                    if (data.code === 200) {
-                        self.user = data.data;
-                        self.user.headImg = imagePrefix + self.user.headImg;
-                    }
-                }
-            });
             $.ajax({
                 headers: {
                     Authorization: localStorage.getItem(token)
@@ -76,20 +63,17 @@ new Vue({
                     }
                 }
             });
-            // 自己加入的贴吧
+            // 个人信息
             $.ajax({
                 headers: {
                     Authorization: localStorage.getItem(token)
                 },
-                url: prefix + 'user/club',
-                type: "get",
-                data: {
-                    page: 1,
-                    limit: 2
-                },
+                url: prefix + 'user/detail',
+                type: "post",
                 success: function (data) {
                     if (data.code === 200) {
-                        self.userClub = data.data;
+                        self.user = data.data;
+                        self.user.headImg = imagePrefix + self.user.headImg;
                     }
                 }
             });
@@ -132,6 +116,26 @@ new Vue({
             editor.FileConfig.FileImgPath = imagePrefix;  //
             editor.setPubConfig.dataFont.windows.push({ch: '宋体', en: 'SimSun'})//设置字体
             this.lEditor = editor;
+        },
+        initSelfClub: function () {
+            let self = this;
+            // 自己加入的贴吧
+            $.ajax({
+                headers: {
+                    Authorization: localStorage.getItem(token)
+                },
+                url: prefix + 'user/club',
+                type: "get",
+                data: {
+                    page: 1,
+                    limit: 2
+                },
+                success: function (data) {
+                    if (data.code === 200) {
+                        self.userClub = data.data;
+                    }
+                }
+            });
         },
         _recommend: function (typeName) {
             let self = this;
@@ -259,7 +263,7 @@ new Vue({
                 }
             });
         },
-        _guanzhu:function () {
+        _guanzhu: function () {
             let self = this;
             if (self.isGuanzhu === "关注") {
                 $.ajax({
@@ -296,7 +300,6 @@ new Vue({
                     }
                 });
             }
-
         }
     }
 

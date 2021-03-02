@@ -14,7 +14,6 @@
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/public.css">
     <link rel="stylesheet" href="css/syalert.min.css"/>
-    <link rel="apple-touch-icon-precomposed" href="images/frame/icon.png">
     <link rel="shortcut icon" href="images/frame/favicon.ico">
     <script src="js/plugins/nprogress.js"></script>
     <script src="js/plugins/syalert/syalert.min.js"></script>
@@ -31,8 +30,8 @@
                 <div class="header-topbar hidden-xs link-border">
                     <ul class="site-nav topmenu">
                         <li><a href="index.html" rel="nofollow">回到主页</a></li>
-                        <li><a href="#" rel="nofollow">欢迎 {{user.userName}}</a></li>
-                        <li><a href="#" title="个人中心"><i class="fa fa-rss"></i> 个人中心</a></li>
+                        <li><a rel="nofollow">欢迎 {{user.userName}}</a></li>
+                        <li><a href="self.html" title="个人中心"><i class="fa fa-rss"></i> 个人中心</a></li>
                         <li><a @click="_logout()" rel="nofollow">退出</a></li>
                     </ul>
                     不靠谱青年男女聚集地
@@ -48,7 +47,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="header-navbar">
                     <div style="float: left">
-                        <img style="width: 50px;height: 50px;margin-left: 20px" src="images/frame/laba.png">
+                        <img style="width: 50px;height: 50px;margin-left: 20px" src="images/frame/gonggao.png">
                     </div>
                     <div style="">
                         <marquee scrollamount=5>Tips:&nbsp;{{declare}}</marquee>
@@ -112,8 +111,8 @@
                                                   @click="_recommend(d.name)">{{d.name}}</a></li>
                 </ul>
             </div>
-            <div class="widget">
-                <h3>实时热榜（第{{topNum}}期）</h3>
+            <div class="widget-rebang">
+                <h3>实时热榜（第{{topNum}}期）<a style="font-size: 10px" href="tops.html">查看往期</a></h3>
                 <ul>
                     <li style="margin-left: 25%;margin-top: 5px" v-for="(t,i) in tops">
                         <a :href="'show.html?uuid=' + t.articleUuid" :title="t.articleTitle" target="_blank">{{i+1}}:&nbsp;&nbsp;{{t.articleTitle}}</a>
@@ -123,8 +122,8 @@
 
             <div class="widget widget_sentence">
                 <h3>广告位招租</h3>
-                <a href="#" target="_blank" rel="nofollow" title="广告位">
-                    <img style="width: 100%" src="images/frame/270200.jpg" alt="广告位"></a>
+                <a  target="_blank" rel="nofollow" title="广告位">
+                    <img style="width: 100%" src="images/frame/guanggaowei.jpg" alt="广告位"></a>
             </div>
             <div class="widget widget_sentence">
                 <h3>友情链接</h3>
@@ -148,17 +147,17 @@
                     </ol>
                     <div class="carousel-inner" role="listbox">
                         <div class="item active">
-                            <a href="#" target="_blank" title="推荐">
-                                <img src="images/frame/IMG_004%20(3).jpg" alt="图p不见了"
+                            <a  target="_blank" title="推荐">
+                                <img src="images/frame/tuijian1.jpg" alt="图p不见了"
                                      class="img-responsive"></a>
                         </div>
                         <div class="item">
-                            <a href="#" target="_blank" title="推荐">
-                                <img src="images/frame/nvhai.jpg" alt="图p不见了" class="img-responsive"></a>
+                            <a  target="_blank" title="推荐">
+                                <img src="images/frame/tuijian2.jpg" alt="图p不见了" class="img-responsive"></a>
                         </div>
                         <div class="item">
-                            <a href="#" target="_blank" title="推荐">
-                                <img src="images/frame/lantingxu.jpg" alt="图p不见了" class="img-responsive"></a>
+                            <a  target="_blank" title="推荐">
+                                <img src="images/frame/tuijian3.jpg" alt="图p不见了" class="img-responsive"></a>
                         </div>
                     </div>
                     <a class="left carousel-control" href="#focusslide" role="button" data-slide="prev" rel="nofollow">
@@ -168,19 +167,13 @@
                                 class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span
                                 class="sr-only">下一个</span>
                     </a></div>
-                <!--article class="excerpt-minic excerpt-minic-index">
-                    <h2><span class="red">【推荐】</span><a target="_blank" href="#" title="用DTcms做一个独立博客网站（响应式模板）">用DTcms做一个独立博客网站（响应式模板）</a>
-                    </h2>
-                    <p class="note">用DTcms做一个独立博客网站（响应式模板），采用DTcms V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                        V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）</p>
-                </article-->
                 <div class="title">
                     <h3>{{isClub?luntan1:tiezi1}}</h3>
                     <div class="more">
                         <a @click="_recommend()">刷新一下</a>
                         <a onClick="syalert.syopen('createClub')">我要创建论坛！</a>
                         <a @click="_changeType">{{isClub?luntan2:tiezi2}}</a>
-                        <a href="#"></a>
+                        <a ></a>
                     </div>
                 </div>
 
@@ -188,8 +181,8 @@
                          :title="a.title"
                          style="padding: 0 20px 20px 50px;">
                     <header>
-                        <a class="cat" href="#" :title="a.typeName">{{a.typeName}}<i></i></a>
-                        <h2><a href="#" title="a.title" target="_blank" @click="goshow(a.uuid)">{{a.title}}</a></h2>
+                        <a class="cat"  :title="a.typeName">{{a.typeName}}<i></i></a>
+                        <h2><a  title="a.title" target="_blank" @click="goshow(a.uuid)">{{a.title}}</a></h2>
                     </header>
                     <p class="meta">
                         <time title="发布时间" class="time"><i class="glyphicon glyphicon-time"></i>{{a.createdAt}}</time>
@@ -206,11 +199,11 @@
                 <article v-show="isClub" v-for="(c,i) in clubs" @click="goclub(c.uuid)" class="excerpt excerpt-1"
                          :title="c.name"
                          style="">
-                    <a class="focus" href="#" title="c.description" target="_blank">
+                    <a class="focus"  title="c.description" target="_blank">
                         <img class="thumb" :src="c.headImg" alt="头像不见惹" style="display: inline;"></a>
                     <header>
-                        <a class="cat" href="#" :title="c.typeName">{{c.typeName}}<i></i></a>
-                        <h2><a href="#" title="a.title" target="_blank">{{c.name}}</a></h2>
+                        <a class="cat"  :title="c.typeName">{{c.typeName}}<i></i></a>
+                        <h2><a  title="a.title" target="_blank">{{c.name}}</a></h2>
                     </header>
                     <p class="meta">
                         <time class="time"><i class="glyphicon glyphicon-time"></i>{{c.createdAt}}</time>
@@ -242,7 +235,7 @@
             <div class="sy-content">
                 <div class="form">
                     <p class="input-item"><input type="text" id="clubName" placeholder="论坛名称"/></p>
-                    <p class="input-item">论坛头像<input type="file" name="clubHeadImg" id="clubHeadImg"/></p>
+                    <p id="clubHeadImgShow" class="input-item">论坛头像<input type="file" name="clubHeadImg" id="clubHeadImg"/></p>
                     <p class="input-item">论坛类型（多选）</p>
                     <span v-for="(d,i) in dicts"><label>
                     <input class="createClubClass" type="checkbox" :name="d.name" :value="d.id">
