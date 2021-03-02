@@ -299,7 +299,28 @@ new Vue({
                     syalert.syhide('reportArticle');
                 }
             });
-        }
+        },
+        // // 收藏
+        // _like: function (id, uuid, title) {
+        //     $.ajax({
+        //         headers: {
+        //             Authorization: localStorage.getItem(token)
+        //         },
+        //         url: prefix + 'user/like/' + uuid,
+        //         type: "post",
+        //         data: {
+        //             title: title,
+        //         },
+        //         success: function (data) {
+        //             if (data.code === 200) {
+        //                 alert("收藏成功！");
+        //                 $("#like" + id).text("已收藏");
+        //             } else {
+        //                 alert(data.msg);
+        //             }
+        //         }
+        //     });
+        // }
 
     }
 

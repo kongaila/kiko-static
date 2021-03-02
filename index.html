@@ -191,6 +191,7 @@
                         <a class="comment" title="评论">
                             <i class="glyphicon glyphicon-comment"></i> {{a.num}}</a>
                         <i></i>发布人： {{a.craterNick}}
+                        <!--button style="width: 50px;height: 30px;color: #00CCCC" :id="'like' + a.id" @click="_like(a.id, a.uuid, a.title)" value="收藏">收藏</button-->
                     </p>
                     <p class="note">{{a.description}}</p>
                     <a @click="_repostShow(a.uuid)" title="举报" style="float:right;margin-right: 15px">举报</a>
