@@ -5,18 +5,20 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>我发现你了</title>
+    <title>个人中心</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/nprogress.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="css/pager.css">
-    <link rel="apple-touch-icon-precomposed" href="images/frame/icon.png">
+    <link rel="stylesheet" type="text/css" href="css/public.css">
+    <link rel="stylesheet" href="css/syalert.min.css"/>
     <link rel="shortcut icon" href="images/frame/favicon.ico">
     <script src="js/plugins/nprogress.js"></script>
+    <script src="js/plugins/syalert/syalert.min.js"></script>
     <script src="js/plugins/jquery-2.1.4.min.js"></script>
+    <script src="js/plugins/jquery.serializejson.js"></script>
     <script src="js/plugins/jquery.lazyload.min.js"></script>
     <script src="js/plugins/vue.js" type="text/javascript"></script>
 </head>
@@ -27,8 +29,10 @@
             <div class="container">
                 <div class="header-topbar hidden-xs link-border">
                     <ul class="site-nav topmenu">
-                        <li><a href="#" rel="nofollow">欢迎 {{user.userName}}</a></li>
-                        <li><a href="#" title="RSS订阅"><i class="fa fa-rss"></i> 个人中心</a></li>
+                        <li><a href="index.html" rel="nofollow">回到主页</a></li>
+                        <li><a rel="nofollow">欢迎 {{user.userName}}</a></li>
+                        <li><a href="self.html" title="个人中心"><i class="fa fa-rss"></i> 个人中心</a></li>
+                        <li><a @click="_logout()" rel="nofollow">退出</a></li>
                     </ul>
                     不靠谱青年男女聚集地
                 </div>
@@ -37,9 +41,10 @@
                             data-target="#header-navbar" aria-expanded="false"><span class="sr-only"></span> <span
                                 class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
                     </button>
-                    <h1 class="logo hvr-bounce-in"><a href="#" title="木庄网络博客"><img
-                                    src="images/frame/201610171329086541.png"
-                                    alt="木庄网络博客"></a></h1>
+                    <h1 class="logo hvr-bounce-in"><a href="index.html" title="返回首页"><img
+                                    style="width: 162px;height: 42px;"
+                                    src="images/frame/logo.svg"
+                                    alt="返回首页"></a></h1>
                 </div>
                 <div class="collapse navbar-collapse" id="header-navbar">
                     <div style="float: left">
@@ -65,17 +70,18 @@
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane contact active" id="notice">
-                            <div style="width: auto;height: 105px;">
-                                &nbsp;&nbsp;&nbsp;<img style="width: 85px;height: 85px;float: left"
-                                                       src="images/head.jpg" alt="找不到头像了"/>
-                                <p style="font-size: 15px">用户名:&nbsp; &nbsp;{{user.userName}}</p>
-                                <p style="font-size: 15px">昵称:&nbsp; &nbsp;{{user.nick}}</p>
-                                <p style="font-size: 15px">吧龄:&nbsp; &nbsp;{{user.age}}岁</p>
+                            <div style="width: auto;height: 105px;float: left">
+                                &nbsp;&nbsp;&nbsp;<img style="width: 125px;height: 125px;"
+                                                       :src="user.headImg" alt="找不到头像了"/>
                             </div>
-                            <div>
-                                <span id="sitetime">我加入的贴吧:&nbsp;<span
-                                            v-for="(c,i) in userClub"><a style="color: #31b0d5"
-                                                                         :href="'club.html?uuid='+c.clubUuid">{{c.clubName}}&nbsp;&nbsp;</a></span>...</span>
+                            <div style="width: auto;height: 105px;">
+                                <br>
+                                <p class="self-info">&nbsp;&nbsp;用户名:&nbsp; &nbsp;<span
+                                            class="xiaozichengse">{{user.userName}}</span></p>
+                                <p class="self-info">&nbsp;&nbsp;昵称:&nbsp; &nbsp;<span
+                                            class="xiaozichengse">{{user.nick}}</span></p>
+                                <p class="self-info">&nbsp;&nbsp;吧龄:&nbsp; &nbsp;<span
+                                            class="xiaozichengse">{{user.age}}岁</span></p>
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane contact" id="contact">
@@ -100,13 +106,6 @@
                     <li><a class="selfMenu" name="selfComment" @click="_menu(4)" title="我发布的评论">我发布的评论</a></li>
                 </ul>
             </div>
-            <div class="widget">
-                <h3>实时热榜（第{{topNum}}期）</h3>
-                <ul>
-                    <li style="margin-left: 25%;margin-top: 5px" v-for="(t,i) in tops">
-                        <a :href="'show.html?uuid=' + t.articleUuid" :title="t.articleTitle" target="_blank">{{i+1}}:&nbsp;&nbsp;{{t.articleTitle}}</a></li>
-                </ul>
-            </div>
 
             <div class="widget widget_sentence">
                 <h3>广告位招租</h3>
@@ -119,65 +118,73 @@
                     <a href="https://www.baidu.com" title="百度" target="_blank">百度</a>&nbsp;&nbsp;&nbsp;
                     <a href="https://www.google.com" title="谷歌" target="_blank">谷歌</a>&nbsp;&nbsp;&nbsp;
                     <a href="https://www.qq.com" title="腾讯" target="_blank">腾讯</a>&nbsp;&nbsp;&nbsp;
+                    <a href="https://www.bilibili.com" title="bilibili" target="_blank">bilibili</a>&nbsp;&nbsp;&nbsp;
+                    <a href="https://www.pixiv.net" title="pixiv" target="_blank">pixiv</a>&nbsp;&nbsp;&nbsp;
+                    <a href="https://www.Yahoo.com" title="Yahoo！" target="_blank">Yahoo！</a>&nbsp;&nbsp;&nbsp;
                 </div>
             </div>
         </aside>
         <div class="content-wrap">
             <div class="content">
                 <div id="focusslide" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#focusslide" data-slide-to="0" class="active"></li>
-                        <li data-target="#focusslide" data-slide-to="1"></li>
-                    </ol>
-                    <div class="carousel-inner" role="listbox">
-                        <div class="item active">
-                            <a href="#" target="_blank" title="推荐">
-                                <img src="images/frame/IMG_004%20(3).jpg" alt="图p不见了"
-                                     class="img-responsive"></a>
-                        </div>
-                        <div class="item">
-                            <a href="#" target="_blank" title="推荐">
-                                <img src="images/frame/Kindred.jpg" alt="图p不见了" class="img-responsive"></a>
-                        </div>
+                    <div class="title">
+                        <h3 v-show="isClub">我加入的论坛</h3>
+                        <h3 v-show="isArticle">我发布的文章</h3>
+                        <h3 v-show="isComment">我的评论</h3>
                     </div>
-                    <a class="left carousel-control" href="#focusslide" role="button" data-slide="prev" rel="nofollow">
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span
-                                class="sr-only">上一个</span> </a> <a class="right carousel-control" href="#focusslide"
-                                                                   role="button" data-slide="next" rel="nofollow"> <span
-                                class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span
-                                class="sr-only">下一个</span>
-                    </a></div>
-                <!--article class="excerpt-minic excerpt-minic-index">
-                    <h2><span class="red">【推荐】</span><a target="_blank" href="#" title="用DTcms做一个独立博客网站（响应式模板）">用DTcms做一个独立博客网站（响应式模板）</a>
-                    </h2>
-                    <p class="note">用DTcms做一个独立博客网站（响应式模板），采用DTcms V4.0正式版（MSSQL）。开发环境：SQL2008R2+VS2010。DTcms
-                        V4.0正式版功能修复和优化：1、favicon.ico图标后台上传。（解决要换图标时要连FTP或者开服务器的麻烦）</p>
-                </article-->
-                <div class="title">
-                    <h3>推荐主题帖</h3>
-                    <div class="more">
-                        <a href="clubs.html">进入论坛页</a>
-                    </div>
-                </div>
+                    <article v-show="isArticle" v-for="(a,i) in articles" @click="goshow(a.uuid)"
+                             class="excerpt excerpt-1"
+                             :title="a.title"
+                             style="padding: 0 20px 20px 50px;">
+                        <header>
+                            <a class="cat"  :title="a.typeName">{{a.typeName}}<i></i></a>
+                            <h2><a  title="a.title" target="_blank" @click="goshow(a.uuid)">{{a.title}}</a></h2>
+                        </header>
+                        <p class="meta">
+                            <time title="发布时间" class="time"><i class="glyphicon glyphicon-time"></i>{{a.createdAt}}
+                            </time>
+                            <span title="浏览量" class="views"><i
+                                        class="glyphicon glyphicon-eye-open"></i> {{a.openNum}}</span>
+                            <a class="comment" title="评论">
+                                <i class="glyphicon glyphicon-comment"></i> {{a.num}}</a>
+                            <i></i>发布人： {{a.craterNick}}
+                        </p>
+                        <p class="note">{{a.description}}</p>
+                    </article>
 
-                <article v-for="(a,i) in articles"  @click="goshow(a.uuid)"  class="excerpt excerpt-1" :title="a.title" style="">
-                    <header>
-                        <a class="cat" href="#" :title="a.typeName">{{a.typeName}}<i></i></a>
-                        <h2><a href="#" title="a.title" target="_blank">{{a.title}}</a></h2>
-                    </header>
-                    <p class="meta">
-                        <time class="time"><i class="glyphicon glyphicon-time"></i>{{a.createdAt}}</time>
-                        <span class="views"><i class="glyphicon glyphicon-eye-open"></i> {{a.openNum}}</span>
-                        <a class="comment" href="#" title="评论" target="_blank">
-                            <i class="glyphicon glyphicon-comment"></i> {{a.num}}</a>
-                        <i></i>发布人： {{a.craterNick}}
-                    </p>
-                    <p class="note">{{a.description}}</p>
-                </article>
-                <hr color="red" />
-                <p v-show="isData" style="text-align: center;font-size: 20px;color:#31b0d5">这里没有数据哦</p>
+                    <article v-show="isClub" v-for="(c,i) in clubs" @click="goclub(c.clubUuid)"
+                             class="excerpt excerpt-1"
+                             :title="c.clubName"
+                             style="">
+                        <a class="focus" @click="goclub(c.uuid)" title="c.clubName" target="_blank">
+                            <img class="thumb" :src="c.clubHeadImg" alt="头像不见惹" style="display: inline;"></a>
+                        <header>
+                            <h2><a  title="a.title" target="_blank">{{c.clubName}}</a></h2>
+                        </header>
+                        <p class="meta">
+                            <time class="time"><i class="glyphicon glyphicon-time"></i>{{c.createdAt}}</time>
+                        </p>
+                    </article>
+
+                    <article v-show="isComment" v-for="(c,i) in comments" class="excerpt excerpt-1"
+                             :title="c.content"
+                             style="padding: 0 20px 20px 50px;">
+                        <header>
+                            <h2><a :title="c.articleTitle" target="_blank">{{c.articleTitle}}</a></h2>
+                        </header>
+                        <p class="meta">
+                            <time title="评论时间" class="time"><i class="glyphicon glyphicon-time"></i>{{c.createdAt}}
+                            </time>
+                            <span title="点赞数" class="views"><i
+                                        class="glyphicon glyphicon-eye-open"></i> {{c.like}}</span>
+                        </p>
+                    </article>
+
+
+                    <hr color="red"/>
+                    <p v-show="isData" style="text-align: center;font-size: 20px;color:#31b0d5">这里没有数据哦</p>
+                </div>
             </div>
-        </div>
     </section>
     <footer class="footer">
         <div class="container">
@@ -187,6 +194,26 @@
         </div>
         <div id="gotop" @click="_gotop"><a class="gotop"></a></div>
     </footer>
+
+    <!-- 修改用户信息弹框 -->
+    <div class="sy-alert sy-alert-model animated" sy-enter="zoomIn" sy-leave="zoomOut" sy-type="confirm" sy-mask="true"
+         id="updateUser">
+        <div class="sy-title">修改个人信息</div>
+        <div class="sy-content">
+            <form id="updateUserForm">
+                <div class="form" id="alertUserForm">
+                    <p class="input-item"><input type="text" id="nick" placeholder="昵称..."/></p>
+                    <p class="input-item"><input type="text" id="phone" placeholder="手机号码..."/></p>
+                    <p class="input-item">上传头像<input type="file" name="headImg" id="headImg"/></p>
+                </div>
+            </form>
+        </div>
+        <div class="sy-btn">
+            <button onClick="syalert.syhide('updateUser')">取消</button>
+            <button @click="_updateUser()">确定</button>
+        </div>
+    </div>
+
 </div>
 <script src="js/plugins/bootstrap.min.js"></script>
 <script src="js/plugins/jquery.ias.js"></script>
