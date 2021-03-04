@@ -156,7 +156,7 @@ document.onkeydown = function(event) {
 };
 try {
 	if (window.console && window.console.log) {
-		console.log("\n欢迎访问Qiqilike！\n\n");
+		console.log("\n欢迎访问kiko！\n\n");
 	}
 } catch (e) {};
 
